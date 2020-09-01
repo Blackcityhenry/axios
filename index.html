@@ -15,7 +15,7 @@
         <v-container>
           <v-row>
             <v-col cols="10">
-              <v-text-field v-model="consoleInput" autofocus color="green" outlined prepend-inner-icon="mdi-earth" prefix="https://" @keyup.enter="process" @keyup="checkHttp" label="URL"></v-text-field>
+              <v-text-field v-model="consoleInput" autofocus color="green" outlined prepend-inner-icon="mdi-earth" prefix="https://" @keyup.enter="process" @keyup.38="historyUp" @keyup.40="historyDown" @keyup="checkHttp" label="URL"></v-text-field>
             </v-col>
             <v-col cols="2">
               <v-select color="green" item-color="green" v-model="method" :items="methods" label="method" filled></v-select>

@@ -13,6 +13,8 @@ var sandbox = new Vue(
       method: 'GET',
       methods: ['GET', 'POST', 'DELETE', 'OPTIONS', 'HEAD', 'PUT', 'CONNECT', 'PATCH'],
       body: [],
+      historyURL: [],
+      historyIndex: 0,
       resultQuery: ''
     },
     methods: {
@@ -22,6 +24,7 @@ var sandbox = new Vue(
       process(){
         var userInput = 'https://' + this.consoleInput;
         var userOutput = [];
+        this.historyURL.push(this.consoleInput);
         this.consoleInput = '';
         var httpBody = {};
 
@@ -47,6 +50,34 @@ var sandbox = new Vue(
             this.resultQuery = userOutput;
           }
         );
+      },
+      historyUp(){
+        var length = this.historyURL.length;
+
+        if ( this.historyIndex == length ){
+
+        } else {
+
+          this.historyIndex += 1;
+          var index = length - this.historyIndex;
+          this.consoleInput = this.historyURL[index];
+
+        }
+
+      },
+      historyDown(){
+        var length = this.historyURL.length;
+
+        if ( this.historyIndex == 0 ){
+
+        } else {
+
+          this.historyIndex -= 1;
+          var index = length - this.historyIndex;
+          this.consoleInput = this.historyURL[index];
+
+        }
+
       },
       addNewBodyRow(){
         this.body.push({key: '', value: ''})
