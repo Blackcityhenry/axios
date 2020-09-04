@@ -26,6 +26,7 @@ var sandbox = new Vue(
         var userOutput = [];
         this.historyURL.push(this.consoleInput);
         this.consoleInput = '';
+        this.historyIndex = 0;
         var httpBody = {};
 
         if ( this.method == 'GET' && this.body.length){
