@@ -15,13 +15,17 @@ var sandbox = new Vue(
       body: [],
       historyURL: [],
       historyIndex: 0,
-      resultQuery: ''
+      resultQuery: '',
+      isLoading: false
     },
     methods: {
       checkHttp(){
         return /^https?\:\/\//g.test(this.consoleInput)? this.consoleInput = this.consoleInput.replace(/https?\:\/\//g, '') : null ;
       },
       process(){
+
+        this.isLoading = true;
+
         var userInput = 'https://' + this.consoleInput;
         var userOutput = [];
         this.historyURL.push(this.consoleInput);
@@ -47,10 +51,21 @@ var sandbox = new Vue(
           body: httpBody
         }).then(
           res => {
-            userOutput = JSON.stringify(res.data).replace(/\[/g, '[<br/>').replace(/\,/g, ',<br/>').replace(/\{/g, '{<br/>').replace(/\}/g, '<br/>}');
+            // userOutput = JSON.stringify(res.data).replace(/\[/g, '[<br/>').replace(/\,/g, ',<br/>').replace(/\{/g, '{<br/>').replace(/\}/g, '<br/>}');
+            userOutput = JSON.stringify(res.data, null, 2)
+
             this.resultQuery = userOutput;
           }
-        );
+        ).catch(
+          err => {
+            userOutput = JSON.stringify(err.response, null, 2)
+          }
+        ).finally(
+          ()=>{
+            this.isLoading = false;
+            this.initPrism();
+          }
+        )
       },
       historyUp(){
         var length = this.historyURL.length;
@@ -82,7 +97,13 @@ var sandbox = new Vue(
       },
       addNewBodyRow(){
         this.body.push({key: '', value: ''})
+      },
+      initPrism(){
+        Prism.highlightAll();
       }
+    },
+    mounted(){
+      // this.initPrism();
     }
   }
 )

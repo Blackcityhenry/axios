@@ -2,3 +2,13 @@ html, body{
   margin: 0;
   overflow-y: auto;
 }
+
+.sandbox-code {
+  white-space: pre-wrap;
+  display: block;
+
+}
+
+pre {
+  margin: 0 20px;
+}
